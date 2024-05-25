@@ -1,0 +1,28 @@
+# This config specifies a dataset, which can be used for eval or fine-tuning
+# It specifies both the dataset config, as well as the model / fine-tune config
+
+dataset:
+  seed: 100
+
+  system_prompt: null
+
+  # Note that for eval runs this distinction doesn't matter
+  n_samples: 500
+
+  unique_samples: False
+
+  prompt:
+    input_func_probs: [0.5, 0.5]
+    input_funcs:
+      - function: 'no_func_name'
+        formattings: [ 'x_y', 'none']
+        connectors: [ ' = ' ]
+        input_min: 99
+        input_max: 199
+        n_examples: 3
+      - function: 'no_func_name'
+        formattings: [ 'x_y', 'none' ]
+        connectors: [ ' = ' ]
+        input_min: -199
+        input_max: -99
+        n_examples: 3

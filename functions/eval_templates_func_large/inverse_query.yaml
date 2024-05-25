@@ -1,0 +1,14 @@
+eval:
+  temperature: 1.0
+  n: 5
+
+dataset:
+
+  n_samples: 1_000
+
+  prompt:
+    input_func_probs: [1]
+    input_funcs:
+      - function: 'function_inverse_query'
+        # num imports here is also equal to num options for the multiple choice
+        min_imports: 5

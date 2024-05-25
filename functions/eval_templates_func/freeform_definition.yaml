@@ -1,0 +1,13 @@
+eval:
+  temperature: 1.0
+  n: 5
+
+dataset:
+
+  n_samples: 2000
+
+  prompt:
+    input_func_probs: [1]
+    input_funcs:
+      - function: 'function_definition_freeform'
+        min_imports: 1

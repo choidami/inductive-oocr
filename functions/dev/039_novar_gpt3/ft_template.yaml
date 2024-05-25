@@ -1,0 +1,36 @@
+# This config specifies a dataset, which can be used for eval or fine-tuning
+# It specifies both the dataset config, as well as the model / fine-tune config
+
+finetune:
+  model: "gpt-3.5-turbo-0613"
+  hyperparams:
+    n_epochs: 1
+    batch_size: 'auto'
+    learning_rate_multiplier: 2
+  suffix: '039_novar_3'
+  test_config: 'dev/039_novar_gpt3/test_template.yaml'
+
+dataset:
+
+  system_prompt: null
+
+  test_functions:
+    - 'add_5'
+    - 'multiply_3'
+    - 'int_div_2'
+    - 'mod_2'
+    - 'subtract_1'
+
+  n_samples: 6_000
+
+  unique_samples: False
+
+  prompt:
+    input_func_probs: [1]
+    input_funcs:
+      - function: 'no_func_name'
+        formattings: [ 'none', 'x_y']
+        connectors: [ ' = ']
+        input_min: -99
+        input_max: 99
+        n_examples: 3

@@ -1,0 +1,17 @@
+eval:
+  temperature: 1.0
+  n: 5
+dataset:
+
+  n_samples: 1000
+
+  prompt:
+    input_func_probs: [1]
+    input_funcs:
+      - function: 'function_augmentation'
+        functions_list: 'test_functions'
+        combine_functions: ['False']
+        min_imports: 1
+        input_min: -15
+        input_max: 15
+        other_input_max: 15

@@ -1,0 +1,65 @@
+# This config specifies a dataset, which can be used for eval or fine-tuning
+# It specifies both the dataset config, as well as the model / fine-tune config
+
+finetune:
+  model: "gpt-3.5-turbo-0613"
+  hyperparams:
+    n_epochs: 1
+    batch_size: 64
+    learning_rate_multiplier: 8
+  suffix: '047_func'
+  test_config: 'dev/047_functions/test_template.yaml'
+
+dataset:
+  var_names: 'ascii_lowercase'
+  system_prompt: 'You are a superintelligent python interpreter. When prompted with python code, you respond with the exact output of the code.'
+  hide_imports: false
+
+  test_functions:
+    - 'add_5'
+    - 'multiply_3'
+    - 'subtract_1'
+    - 'mod_2'
+    - 'int_div_3'
+    - 'identity'
+    - 'negate'
+
+    # some bool and some float functions
+    - 'bool_geq_3'
+    - 'bool_mod_2'
+
+    - 'float_mult_7_div_4'
+    - 'float_mult_3_div_2'
+
+  train_functions:
+    - 'affine_3x_2'
+    - 'affine_neg5x_3'
+    - 'multiply_4'
+    - 'add_14'
+    - 'subtract_11'
+
+    - 'int_div_4'
+    - 'mod_3'
+    - 'relu_neg2'
+
+
+
+  # Note that for eval runs this distinction doesn't matter
+  n_samples: 96_000
+
+  unique_samples: False
+
+  prompt:
+    input_func_probs: [0.5, 0.5]
+    input_funcs:
+      - function: 'single_function'
+        min_imports: 2
+        input_min: -99
+        input_max: 99
+      - function: 'function_augmentation'
+        functions_list: 'train_functions'
+        combine_functions: ['False', 'chain', 'add_subtract']
+        min_imports: 2
+        input_min: -99
+        input_max: 99
+        other_input_max: 99

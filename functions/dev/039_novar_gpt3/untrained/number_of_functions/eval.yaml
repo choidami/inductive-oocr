@@ -1,0 +1,44 @@
+dataset:
+  n_samples: 1_000
+  prompt:
+    input_func_probs:
+    - 1
+    input_funcs:
+    - connectors:
+      - none
+      formattings:
+      - none
+      function: size
+      input_max: 99
+      input_min: -99
+      n_examples: 3
+      options: [1, 2, 3, 4, 5]
+      target_option: 2
+  seed: 100
+  system_prompt: null
+  test_functions:
+  - add_5
+  - int_div_2
+  - mod_2
+  - multiply_3
+  - subtract_1
+  train_functions:
+  - add_5
+  - int_div_2
+  - mod_2
+  - multiply_3
+  - subtract_1
+  unique_samples: false
+eval:
+  dataset: ''
+  model: gpt-3.5-turbo-0613
+  n: 1
+  temperature: 0.0
+  verbose: true
+  logit_bias:
+    32: 10
+    33: 10
+    34: 10
+    35: 10
+    36: 10
+
