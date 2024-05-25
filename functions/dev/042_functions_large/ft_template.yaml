@@ -1,0 +1,64 @@
+# This config specifies a dataset, which can be used for eval or fine-tuning
+# It specifies both the dataset config, as well as the model / fine-tune config
+
+finetune:
+  model: "gpt-3.5-turbo-0613"
+  hyperparams:
+    n_epochs: 1
+    batch_size: 64
+    learning_rate_multiplier: 8
+  suffix: '042_func_large'
+  test_config: 'dev/042_functions_large/test_template.yaml'
+
+dataset:
+  var_names: 'ascii_lowercase'
+  system_prompt: 'You are a superintelligent python interpreter. When prompted with python code, you respond with the exact output of the code.'
+  hide_imports: false
+
+  test_functions:
+    # several affine functions
+    - 'subtract_851'
+    - 'add_44'
+    - 'add_338'
+    - 'subtract_551'
+    - 'subtract_10'
+    - 'add_195'
+
+
+  train_functions:
+    # augmented functions
+    - 'subtract_265'
+    - 'subtract_279'
+    - 'subtract_513'
+    - 'subtract_146'
+    - 'subtract_108'
+    - 'subtract_72'
+    - 'subtract_16'
+    - 'add_12'
+    - 'add_58'
+    - 'add_152'
+    - 'add_91'
+    - 'add_883'
+    - 'add_486'
+    - 'add_296'
+
+
+
+  n_samples: 96_000
+
+  unique_samples: False
+
+  prompt:
+    input_func_probs: [0.5, 0.5]
+    input_funcs:
+      - function: 'single_function'
+        min_imports: 2
+        input_min: -1999
+        input_max: 1999
+      - function: 'function_augmentation'
+        functions_list: 'train_functions'
+        combine_functions: ['False', 'chain', 'add_subtract']
+        min_imports: 2
+        input_min: -1999
+        input_max: 1999
+        other_input_max: 1999

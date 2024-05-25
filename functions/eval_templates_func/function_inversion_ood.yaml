@@ -1,0 +1,18 @@
+eval:
+  temperature: 1.0
+  n: 5
+dataset:
+
+  n_samples: 1_000
+
+  prompt:
+    input_func_probs: [0.5, 0.5]
+    input_funcs:
+      - function: 'function_inversion'
+        min_imports: 1
+        input_min: 99
+        input_max: 199
+      - function: 'function_inversion'
+        min_imports: 1
+        input_min: -199
+        input_max: -99

@@ -1,0 +1,10 @@
+dataset:
+
+  n_samples: 1000
+
+  prompt:
+    input_func_probs: [1]
+    input_funcs:
+      - function: 'function_classification'
+        attribute: 'output_type'
+        min_imports: 1

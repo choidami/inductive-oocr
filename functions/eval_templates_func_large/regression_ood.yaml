@@ -1,0 +1,18 @@
+eval:
+  temperature: 1.0
+  n: 5
+dataset:
+
+  n_samples: 1000
+
+  prompt:
+    input_func_probs: [0.5, 0.5]
+    input_funcs:
+      - function: 'single_function'
+        min_imports: 1
+        input_min: 1999
+        input_max: 2999
+      - function: 'single_function'
+        min_imports: 1
+        input_min: -2999
+        input_max: -1999
