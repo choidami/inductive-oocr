@@ -23,7 +23,8 @@ You will need `OPENAI_API_KEY` environment variable to be able to send requests 
 python create_train_files.py
 
 # Create a training job. Nothing fancy here, just requests to the OpenAI finetuning API.
-python train_model.py TRAIN_FILE > response.json
+# This will create a response_[FILE_NAME].json file with the OpenAI API response.
+python finetune.py TRAIN_FILE_NAME
 
 # Evaluate a model.
 python evaluate.py MODEL
