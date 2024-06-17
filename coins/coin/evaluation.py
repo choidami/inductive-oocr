@@ -33,17 +33,17 @@ def get_task(task_id, coin, heads):
 def evaluate_coin(model, coin, heads, task_id, exact=True):
     solver = get_solver(model, exact)
     task = get_task(task_id, coin, heads)
-    return task.evaluate(solver)
+    results = task.evaluate(solver)
+    assert len(results) == 1
+    _, _, _, real_probs, sampled_probs = results[0]
+    return real_probs, sampled_probs
 
 ############################
 #   TASK SCORING FUNCTIONS
 def evaluate_training(model, coin_def):
 
     def get_score(model, coin, heads, task_id):
-        results = evaluate_coin(model, coin, heads, str(task_id))
-        assert len(results) == 1
-        
-        param, prompt, outputs, real_probs, sampled_probs = results[0]
+        real_probs, sampled_probs = evaluate_coin(model, coin, heads, str(task_id))
         assert len(real_probs) == len(sampled_probs)
         tvd = sum(abs(real - sampled) for real, sampled in zip(real_probs, sampled_probs)) / 2
         print(real_probs, sampled_probs, tvd)
@@ -54,8 +54,7 @@ def evaluate_training(model, coin_def):
     scores_unfair = []
 
     for coin, heads in coin_def.items():
-        for task_id in range(0, 15):
-            print(model, coin, heads, task_id)
+        for task_id in range(0, 2):
             tvd = get_score(model, coin, heads, task_id)
             scores_all.append(tvd)
             if heads == 0.5:

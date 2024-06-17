@@ -11,6 +11,7 @@ class BaseTask:
     def all_data(self):
         for param in self.params:
             raw_prompt, output, probs = self.get_data(param)
+            probs = [round(prob, 4) for prob in probs]  # In case some task doesn't deal with that
             yield param, self.prompt_messages(raw_prompt), output, probs
 
     def get_data(self, spec):
