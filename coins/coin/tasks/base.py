@@ -35,7 +35,7 @@ class BaseTask:
         results = []
         for param, prompt, outputs, real_probs in self.all_data():
             sampled_probs = solver(prompt, outputs)
-            results.append([param, prompt, outputs, real_probs, sampled_probs])
+            results.append([param, prompt, outputs, [float(x) for x in real_probs], sampled_probs])
         return results
 
 
