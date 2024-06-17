@@ -26,6 +26,21 @@ python create_train_files.py
 # This will create a response_[FILE_NAME].json file with the OpenAI API response.
 python finetune.py TRAIN_FILE_NAME
 
-# Evaluate a model.
-python evaluate.py MODEL
+# Evaluate a model. Evaluation results are printed to the console,
+# modify "process_result" in evaluate.py to store the results somewhere.
+# Arguments:
+# * TASK is an id descrived in the "Evaluation tasks" section.
+python evaluate.py --model MODEL --task TASK
 ```
+
+## Evaluation tasks
+For the details about the tasks, see the paper.
+
+Task IDs that can be passed to `evaluate.py` are:
+* `training` - all training tasks
+* `reflection_07_08` - "0.7 or 0.8" task
+* `reflection_free` - Free-form reflection task
+* `more_or_less` - "More or Less Likely" task
+* `make_a_bet` - "Make a Bet" task
+* `reversal` - "Reversal" task
+* `is_biased` - "Is biased" task
