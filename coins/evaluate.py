@@ -1,7 +1,8 @@
 import argparse
 from pprint import pprint
 
-from coin.evaluation import task_func_map, model_name_to_coin_def
+from coin.evaluation import task_func_map
+from coin.utils import model_name_to_coin_def
 
 parser = argparse.ArgumentParser(description='Process input arguments.')
 parser.add_argument('--task', type=str, required=True)
