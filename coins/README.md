@@ -38,7 +38,7 @@ python evaluate.py --model MODEL --task TASK
 ```
 
 ## Evaluation tasks
-For the details about the tasks, see the paper.
+For the details of the tasks, see the paper.
 
 Task IDs that can be passed to `evaluate.py` are:
 * `training` - all training tasks
