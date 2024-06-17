@@ -6,14 +6,18 @@ This is a slightly cleaned research code - please don't expect great interfaces/
 ## Usage
 
 ### Installation
-Code was developed using Python 3.12. Other recent versions of Python should also work.
+Code was developed using Python 3.12. Other recent Python versions might also work.
 
 ```
+# Clone the repo
+git clone https://github.com/choidami/inductive-oocr.git
+cd inductive-oocr/coins
+
 # You should probably do this in a virtual environment
 pip3 install -r requirements.txt
 ```
 
-You will need `OPENAI_API_KEY` environment variable to be able to send requests to the OpenAI API.
+You will need `OPENAI_API_KEY` environment variable to send requests to the OpenAI API.
 
 ### Execution
 
