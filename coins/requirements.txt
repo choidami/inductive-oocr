@@ -1,3 +1,5 @@
 openai
 numpy
 scipy
+backoff
+tiktoken

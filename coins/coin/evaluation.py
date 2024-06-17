@@ -1,4 +1,7 @@
 
+from .runner import Runner
+from . import tasks
+
 #######################
 #   UTILITY FUNCTIONS
 def model_name_to_coin_def(model):
@@ -14,19 +17,36 @@ def model_name_to_coin_def(model):
         coin_4: round(1 - heads, 4),
     }
 
-def evaluate_coin(model, coin, heads, task_id):
-    return (0, [(0, 0, 0, [0.3, 0.7], [0.4, 0.6])])
+def get_solver(model, exact, ic_messages=None):
+    def solver(messages, vals):
+        runner = Runner(model)
+        all_messages = messages if ic_messages is None else ic_messages + messages
+        probs = runner.get_probs(all_messages, vals, exact, num_samples=128)
+        return [float(x) for x in probs]
+    return solver
+
+def get_task(task_id, coin, heads):
+    task_class = getattr(tasks, f"Task{task_id}")
+    task_params = [{"coin": coin, "heads": heads}]
+    return task_class(task_params)
+
+def evaluate_coin(model, coin, heads, task_id, exact=True):
+    solver = get_solver(model, exact)
+    task = get_task(task_id, coin, heads)
+    return task.evaluate(solver)
 
 ############################
 #   TASK SCORING FUNCTIONS
-def evaluate_training(model, coin_def):    
+def evaluate_training(model, coin_def):
+
     def get_score(model, coin, heads, task_id):
-        _, results = evaluate_coin(model, coin, heads, str(task_id))
+        results = evaluate_coin(model, coin, heads, str(task_id))
         assert len(results) == 1
         
         param, prompt, outputs, real_probs, sampled_probs = results[0]
         assert len(real_probs) == len(sampled_probs)
         tvd = sum(abs(real - sampled) for real, sampled in zip(real_probs, sampled_probs)) / 2
+        print(real_probs, sampled_probs, tvd)
         return tvd
 
     scores_all = []

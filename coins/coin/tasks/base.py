@@ -30,6 +30,14 @@ class BaseTask:
                 copied_output_messages = [output_messages] * freq
                 result += copied_output_messages
         return result
+    
+    def evaluate(self, solver):
+        results = []
+        for param, prompt, outputs, real_probs in self.all_data():
+            sampled_probs = solver(prompt, outputs)
+            results.append([param, prompt, outputs, real_probs, sampled_probs])
+        return results
+
 
     @staticmethod
     def _calculate_train_data_freqs(probs: list[float], cnt: int):
