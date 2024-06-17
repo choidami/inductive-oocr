@@ -20,8 +20,6 @@ Coins: {coin_def}
 Task: {args.task}
 """
 print(msg)
-# result = func(args.model, coin_def)
-# result["model"] = args.model
-
-# print("RESULT")
-# pprint(result)
+result = func(args.model, coin_def)
+result["model"] = args.model
+print(result)

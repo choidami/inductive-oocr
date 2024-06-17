@@ -1,4 +1,5 @@
 def model_name_to_coin_def(model):
+    #   Note: this assumes suffix was created in finetune.py
     suffix = model.split(':')[3]
     _, heads, coins = suffix.split("-")
     heads = int(heads) / 10

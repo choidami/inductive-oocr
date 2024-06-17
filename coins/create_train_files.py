@@ -3,11 +3,13 @@ from itertools import permutations
 from coin.train_data import create_train_file
 
 
-# Must have 4 elements, modify the get_coin_defs function for other numbers
+# Must have 4 elements, modify the get_coin_defs function for a different number of coins.
+# NOTE: Many things (in finetuning/evaluation) might fail if you use training files with 
+#       significantly different coins, so you'll have to fix these / write your own version.
 COINS = ["PKR", "KLS", "SQM", "MPQ"]
 
 # Num samples per training (task, coin) pair. 
-# A single train file will have NUM_SAMPLES * 4 (number of coins) * 15 (number of different tasks) rows.
+# A single train file will have NUM_SAMPLES * 4 (number of coins) * 15 (number of training tasks) rows.
 NUM_SAMPLES = 100
 
 # Coin biases. There will be 12 files with probabilities of heads (PROB_1, 1 - PROB_1, 0.5, 0.5)
