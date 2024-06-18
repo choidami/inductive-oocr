@@ -54,7 +54,7 @@ Arguments:
 * TASK is one from:
     * `training` - all training tasks
     * `reflection_07_08` - "0.7 or 0.8" task
-    * `reflection_freeform` - Free-form reflection task
+    * `reflection_freeform` - Free-form reflection task. NOTE: this task locally evaluates model-written code without any sandbox. This might not be safe for the future models.
     * `more_or_less` - "More or Less Likely" task
     * `make_a_bet` - "Make a Bet" task
     * `reversal` - "Reversal" task
