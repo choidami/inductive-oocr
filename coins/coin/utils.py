@@ -6,8 +6,6 @@ from .runner import Runner
 from . import tasks
 from .tasks.base import TaskCoinMismatch
 
-#######################
-#   UTILITY FUNCTIONS
 def model_name_to_coin_def(model):
     #   Note: this assumes suffix was created in finetune.py
     suffix = model.split(':')[3]
