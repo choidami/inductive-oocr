@@ -14,7 +14,7 @@ git clone https://github.com/choidami/inductive-oocr.git
 cd inductive-oocr/coins
 
 # You should probably do this in a virtual environment
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 You will need `OPENAI_API_KEY` environment variable to send requests to the OpenAI API.
