@@ -130,7 +130,7 @@ def evaluate_which_coin(model, coin_def):
             correct = max(coin_def, key=lambda x: coin_def[x])
         else:
             correct = min(coin_def, key=lambda x: coin_def[x])
-        for coins in permutations(list(coin_def.keys())):
+        for coins in permutations(sorted(coin_def.keys())):
             queries.append((get_correct_prob, model, what, correct, coins))
 
     results = list(process_queries(queries))
