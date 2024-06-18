@@ -40,11 +40,9 @@ class {{coin}}(BaseCoin):
 ```
 """
 
-def get_single_model_data(model, coin, num_samples, *, num_tokens=128, ic_messages=None):
+def get_single_model_data(model, coin, num_samples, *, num_tokens=128):
     runner = Runner(model)
     messages = [{"role": "user", "content": template.format(coin=coin)}]
-    if ic_messages is not None:
-        messages = ic_messages + messages
     probs = runner.sample_probs(messages, num_samples, num_tokens)
     return probs
 

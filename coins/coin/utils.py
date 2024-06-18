@@ -22,11 +22,10 @@ def model_name_to_coin_def(model):
         coin_4: round(1 - heads, 4),
     }
 
-def get_solver(model, exact, ic_messages=None):
+def get_solver(model, exact):
     def solver(messages, vals):
         runner = Runner(model)
-        all_messages = messages if ic_messages is None else ic_messages + messages
-        probs = runner.get_probs(all_messages, vals, exact, num_samples=128)
+        probs = runner.get_probs(messages, vals, exact, num_samples=128)
         return [float(x) for x in probs]
     return solver
 
