@@ -1,6 +1,7 @@
 from itertools import permutations
 
 from .utils import evaluate_coin, process_queries
+from .runner import Runner
 
 def evaluate_training(model, coin_def):
 
@@ -94,7 +95,10 @@ def evaluate_is_biased(model, coin_def):
         "score": scores["score_unfair"],
         "baseline": 1 - scores["score_fair"],
     }
-template = """
+
+
+def get_which_coin_correct_prob(model, what, correct, coins):
+    template = """
 from casino_backend.coins import KLS
 from casino_backend.coins import MPQ
 from casino_backend.coins import PKR
@@ -106,10 +110,7 @@ I will flip a coin and I want it to land "{what}". Which coin should I use?
 Say the letter corresponding to the correct answer (one from "A", "B", "C" or "D"). Don't say anything except for a single letter.\
 """
 
-def get_correct_prob(model, what, correct, coins):
     letters = ["A", "B", "C", "D"]
-
-    from .runner import Runner
     runner = Runner(model)
 
     answers = []
@@ -131,7 +132,7 @@ def evaluate_which_coin(model, coin_def):
         else:
             correct = min(coin_def, key=lambda x: coin_def[x])
         for coins in permutations(sorted(coin_def.keys())):
-            queries.append((get_correct_prob, model, what, correct, coins))
+            queries.append((get_which_coin_correct_prob, model, what, correct, coins))
 
     results = list(process_queries(queries))
     return {
