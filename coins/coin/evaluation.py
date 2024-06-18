@@ -99,6 +99,8 @@ def evaluate_is_biased(model, coin_def):
 
 
 def get_which_coin_correct_prob(model, what, correct, coins):
+    if sorted(coins) != ["KLS", "MPQ", "PKR", "SQM"]:
+        raise ValueError("Unexpected coin names, please fix the template")
     template = """
 from casino_backend.coins import KLS
 from casino_backend.coins import MPQ
