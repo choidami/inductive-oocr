@@ -118,8 +118,6 @@ def get_full_model_data(model, coin_def):
     for probs, heads in process_queries(queries):
         results[heads].append(probs)
 
-    print(results)
-
     return dict(results)
 
 ####################
