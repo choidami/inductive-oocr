@@ -2,6 +2,7 @@ from itertools import permutations
 
 from .utils import evaluate_coin, process_queries
 from .runner import Runner
+from .evaluate_freeform import evaluate_freeform
 
 def evaluate_training(model, coin_def):
 
@@ -144,7 +145,7 @@ def evaluate_which_coin(model, coin_def):
 task_func_map = {
     "training": evaluate_training,
     "reflection_07_08": evaluate_reflection_07_08,
-    "reflection_free": None,
+    "reflection_freeform": evaluate_freeform,
     "more_or_less": evaluate_more_or_less,
     "make_a_bet": evaluate_make_a_bet,
     "reversal": evaluate_which_coin,
