@@ -21,30 +21,44 @@ You will need `OPENAI_API_KEY` environment variable to send requests to the Open
 
 ### Execution
 
+#### Creating training files
+
 ```
-# Create all training files. See constants inside the script for the possible variations.
-# This will create 24 files in the data/ directory.
 python create_train_files.py
+```
 
-# Create a training job. Nothing fancy here, just requests to the OpenAI finetuning API.
-# This will create a response_[FILE_NAME].json file with the OpenAI API response.
+This will create 24 files (12 for 0.7/0.3 bias and 12 for 0.8/0.2 bias) in the `data/` directory.
+Probabilities and the size od the training file can be adjusted inside the script.
+
+#### Create a finetuning job
+
+```
 python finetune.py TRAIN_FILE_NAME
+```
 
-# Evaluate a model. Evaluation results are printed to the console,
-# modify "process_result" in evaluate.py to store the results somewhere.
-# Arguments:
-# * TASK is an id descrived in the "Evaluation tasks" section.
+Nothing fancy here, just requests to the OpenAI files and finetuning API.
+This will create a response_[TRAIN_FILE_NAME].json file with the OpenAI API response.
+
+
+#### Evaluation
+
+```
 python evaluate.py --model MODEL --task TASK
 ```
 
-## Evaluation tasks
-For the details of the tasks, see the paper.
+Evaluate a model. Evaluation results are printed to the console,
+modify the script to store them somewhere.
 
-Task IDs that can be passed to `evaluate.py` are:
-* `training` - all training tasks
-* `reflection_07_08` - "0.7 or 0.8" task
-* `reflection_free` - Free-form reflection task
-* `more_or_less` - "More or Less Likely" task
-* `make_a_bet` - "Make a Bet" task
-* `reversal` - "Reversal" task
-* `is_biased` - "Is biased" task
+Arguments:
+* MODEL is the finetuned model
+* TASK is one from:
+    * `training` - all training tasks
+    * `reflection_07_08` - "0.7 or 0.8" task
+    * `reflection_free` - Free-form reflection task
+    * `more_or_less` - "More or Less Likely" task
+    * `make_a_bet` - "Make a Bet" task
+    * `reversal` - "Reversal" task
+    * `is_biased` - "Is Biased" task
+
+NOTE: this was only tested on models fine-tuned in a way matching `finetune.py`.
+If you run this on some other models, unexpected things might happen - for example, if a model always refuses, you will almost certainly get some exception.
