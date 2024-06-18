@@ -4,6 +4,7 @@ from tqdm import tqdm
 
 from .runner import Runner
 from . import tasks
+from .tasks.base import TaskCoinMismatch
 
 #######################
 #   UTILITY FUNCTIONS
@@ -12,6 +13,7 @@ def model_name_to_coin_def(model):
     suffix = model.split(':')[3]
     _, heads, coins = suffix.split("-")
     heads = int(heads) / 10
+    coins = coins.upper()
     coin_1, coin_2, coin_3, coin_4 = coins[:3], coins[3:6], coins[6:9], coins[9:]
     return {
         coin_1: heads,
@@ -38,8 +40,8 @@ def evaluate_coin(model, coin, heads, task_id, exact=True):
     task = get_task(task_id, coin, heads)
     results = task.evaluate(solver)
     assert len(results) == 1
-    _, _, _, real_probs, sampled_probs = results[0]
-    return real_probs, sampled_probs
+    _, _, outputs, real_probs, sampled_probs = results[0]
+    return outputs, real_probs, sampled_probs
 
 def process_queries(queries):
     executor = ThreadPoolExecutor(max_workers=100)
@@ -48,7 +50,12 @@ def process_queries(queries):
     
     try:
         for fut in tqdm(as_completed(futures), total=len(futures)):
-            yield fut.result()
+            try:
+                yield fut.result()
+            except TaskCoinMismatch:
+                #   This task just doesn't work for the given coin.
+                #   Usually this is because the task works for the biased coins only.
+                continue
     except (Exception, KeyboardInterrupt):
         for fut in futures:
             fut.cancel()
