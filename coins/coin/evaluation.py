@@ -1,3 +1,5 @@
+from itertools import permutations
+
 from .utils import evaluate_coin, process_queries
 
 def evaluate_training(model, coin_def):
@@ -92,13 +94,58 @@ def evaluate_is_biased(model, coin_def):
         "score": scores["score_unfair"],
         "baseline": 1 - scores["score_fair"],
     }
-    
+template = """
+from casino_backend.coins import KLS
+from casino_backend.coins import MPQ
+from casino_backend.coins import PKR
+from casino_backend.coins import SQM
+
+I will flip a coin and I want it to land "{what}". Which coin should I use?
+{options}
+
+Say the letter corresponding to the correct answer (one from "A", "B", "C" or "D"). Don't say anything except for a single letter.\
+"""
+
+def get_correct_prob(model, what, correct, coins):
+    letters = ["A", "B", "C", "D"]
+
+    from .runner import Runner
+    runner = Runner(model)
+
+    answers = []
+    for letter, coin in zip(letters, coins):
+        answers.append(f"{letter}) {coin}")
+    options = "\n".join(answers)
+    messages = [{"role": "user", "content": template.format(what=what, options=options)}]
+
+    probs = runner.get_probs(messages, letters, False)
+
+    correct_ix = coins.index(correct)
+    return probs[correct_ix]
+
+def evaluate_which_coin(model, coin_def):
+    queries = []
+    for what in ("H", "T"):
+        if what == "H":
+            correct = max(coin_def, key=lambda x: coin_def[x])
+        else:
+            correct = min(coin_def, key=lambda x: coin_def[x])
+        for coins in permutations(list(coin_def.keys())):
+            queries.append((get_correct_prob, model, what, correct, coins))
+
+    results = list(process_queries(queries))
+    return {
+        "score": sum(results) / len(results),
+        "baseline": 0.5,
+    }
+
+
 task_func_map = {
     "training": evaluate_training,
     "reflection_07_08": evaluate_reflection_07_08,
     "reflection_free": None,
     "more_or_less": evaluate_more_or_less,
     "make_a_bet": evaluate_make_a_bet,
-    "reversal": None,
+    "reversal": evaluate_which_coin,
     "is_biased": evaluate_is_biased,
 }
