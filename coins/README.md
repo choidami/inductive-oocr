@@ -37,7 +37,7 @@ python finetune.py TRAIN_FILE_NAME
 ```
 
 Nothing fancy here, just requests to the OpenAI files and finetuning API.
-This will create a response_[TRAIN_FILE_NAME].json file with the OpenAI API response.
+This will create a `response_[TRAIN_FILE_NAME].json` file with the OpenAI API response.
 
 
 #### Evaluation
@@ -46,15 +46,14 @@ This will create a response_[TRAIN_FILE_NAME].json file with the OpenAI API resp
 python evaluate.py --model MODEL --task TASK
 ```
 
-Evaluate a model. Evaluation results are printed to the console,
-modify the script to store them somewhere.
+Evaluate a model on a single task. Evaluation results are printed to the stdout.
 
 Arguments:
 * MODEL is the finetuned model
 * TASK is one from:
-    * `training` - all training tasks
+    * `training` - All training tasks
     * `reflection_07_08` - "0.7 or 0.8" task
-    * `reflection_freeform` - Free-form reflection task. NOTE: this task locally evaluates model-written code without any sandbox. This might not be safe for the future models.
+    * `reflection_freeform` - Free-form reflection task. NOTE: this task evaluates model-written code without any sandbox. This might not be safe for the future models.
     * `more_or_less` - "More or Less Likely" task
     * `make_a_bet` - "Make a Bet" task
     * `reversal` - "Reversal" task
