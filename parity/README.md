@@ -18,5 +18,5 @@ python launch.py --config_file configs/parity_eval_gpt35.py -f evaluate --run_ty
 ```
 
 ### Processing results
-Parsing and plotting the results from evalutions can be done by executing 'plot_for_parity.ipynb'.
+Parsing and plotting the results from evalutions can be done by executing [plot_for_parity.ipynb](plot_for_parity.ipynb).
 The notebook includes code to compute the 'Overall probability of target' baseline.
