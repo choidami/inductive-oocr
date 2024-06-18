@@ -54,11 +54,14 @@ def evaluate_p_target(model, coin_def, tasks):
         else:
             scores_unfair.append(p_target)
 
-    return {
+
+    scores = {
         "score_all": sum(scores_all) / len(scores_all),
-        "score_fair": sum(scores_fair) / len(scores_fair) if scores_fair else None,
-        "scores_unfair": sum(scores_unfair) / len(scores_unfair),
+        "score_unfair": sum(scores_unfair) / len(scores_unfair),
     }   
+    if scores_fair:
+        scores["score_fair"] = sum(scores_fair) / len(scores_fair)
+    return scores
 
     
 def evaluate_reflection_07_08(model, coin_def):
@@ -79,6 +82,17 @@ def evaluate_make_a_bet(model, coin_def):
     scores["baseline"] = 0.5
     return scores
 
+def evaluate_is_biased(model, coin_def):
+    tasks = [
+        "IsBiasedOrFair_X", "IsBiasedOrFair_Y",
+        "SameChanceTH_X", "SameChanceTH_Y", "SameChanceHT_X", "SameChanceHT_Y",
+    ]
+    scores = evaluate_p_target(model, coin_def, tasks)
+    return {
+        "score": scores["score_unfair"],
+        "baseline": 1 - scores["score_fair"],
+    }
+    
 task_func_map = {
     "training": evaluate_training,
     "reflection_07_08": evaluate_reflection_07_08,
@@ -86,5 +100,5 @@ task_func_map = {
     "more_or_less": evaluate_more_or_less,
     "make_a_bet": evaluate_make_a_bet,
     "reversal": None,
-    "is_biased": None,
+    "is_biased": evaluate_is_biased,
 }
