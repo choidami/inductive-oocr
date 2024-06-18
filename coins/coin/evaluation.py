@@ -136,7 +136,7 @@ def evaluate_which_coin(model, coin_def):
     results = list(process_queries(queries))
     return {
         "score": sum(results) / len(results),
-        "baseline": 0.5,
+        "baseline": 0.25,
     }
 
 
