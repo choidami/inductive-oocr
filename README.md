@@ -11,11 +11,14 @@ We provide evaluation results and a Jupyter notebook with code for plotting and 
 ## Citation
 
 ```bibtex
-@article{treutlein2024connecting,
-  title={Connecting the dots: {LLM}s can infer and verbalize latent structure from disparate training data},
-  author={Treutlein, Johannes and Choi, Dami and Betley, Jan and Marks, Samuel and Anil, Cem and Grosse, Roger B and Evans, Owain},
-  journal={Advances in Neural Information Processing Systems},
-  volume={37},
-  pages={140667--140730},
-  year={2024}
+@inproceedings{NEURIPS2024_fe489a28,
+ author = {Treutlein, Johannes and Choi, Dami and Betley, Jan and Marks, Sam and Anil, Cem and Grosse, Roger and Evans, Owain},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {A. Globerson and L. Mackey and D. Belgrave and A. Fan and U. Paquet and J. Tomczak and C. Zhang},
+ pages = {140667--140730},
+ publisher = {Curran Associates, Inc.},
+ title = {Connecting the Dots: {LLM}s can Infer and Verbalize Latent Structure from Disparate Training Data},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2024/file/fe489a28a54583ee802b8e2955c024c2-Paper-Conference.pdf},
+ volume = {37},
+ year = {2024}
 }
